@@ -1,36 +1,39 @@
 import { Outlet, NavLink } from 'react-router-dom'
 import { LayoutDashboard, FileText, Users, LogOut } from 'lucide-react'
+import { AmortixMark } from './AmortixLogo'
 
 const nav = [
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/contracts', label: 'Contracts', icon: FileText },
-  { to: '/contacts', label: 'Contacts', icon: Users },
+  { to: '/dashboard', label: 'Dashboard',  icon: LayoutDashboard },
+  { to: '/contracts', label: 'Contracts',   icon: FileText        },
+  { to: '/contacts',  label: 'Contacts',    icon: Users           },
 ]
 
 export default function Layout() {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <aside className="flex w-56 flex-col bg-slate-900 text-white">
-        <div className="flex items-center gap-2 border-b border-slate-700 px-5 py-5">
-          <div className="flex h-8 w-8 items-center justify-center rounded bg-brand-500 text-xs font-bold">
-            LO
-          </div>
-          <div>
-            <p className="text-sm font-semibold leading-tight">Loan Operator</p>
-            <p className="text-xs text-slate-400">Demo Account</p>
-          </div>
+    <div className="flex h-screen overflow-hidden bg-surface-base">
+      {/* Sidebar */}
+      <aside className="flex w-60 flex-col border-r border-white/5 bg-surface-base">
+
+        {/* Wordmark */}
+        <div className="flex items-center gap-3 px-5 py-6">
+          <AmortixMark size={30} />
+          <span className="text-lg font-extrabold tracking-tight">
+            <span className="text-ink-primary">AMORTI</span>
+            <span style={{ background: 'linear-gradient(135deg,#00d4aa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>X</span>
+          </span>
         </div>
 
-        <nav className="flex-1 space-y-1 px-3 py-4">
+        {/* Nav */}
+        <nav className="flex-1 space-y-0.5 px-3">
           {nav.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-brand-600 text-white'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-accent-subtle text-accent'
+                    : 'text-ink-secondary hover:bg-white/5 hover:text-ink-primary'
                 }`
               }
             >
@@ -40,23 +43,24 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="border-t border-slate-700 px-3 py-4">
-          <div className="mb-3 flex items-center gap-2 px-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-600 text-xs font-medium">
+        {/* User */}
+        <div className="border-t border-white/5 p-4">
+          <div className="flex items-center gap-3 rounded-xl px-3 py-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/20 text-xs font-bold text-accent">
               LM
             </div>
-            <div>
-              <p className="text-xs font-medium">Loan Maker</p>
-              <p className="text-xs text-slate-400">Administrator</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-ink-primary">Loan Maker</p>
+              <p className="text-xs text-ink-muted">Administrator</p>
             </div>
+            <button className="text-ink-muted hover:text-ink-secondary transition-colors">
+              <LogOut size={14} />
+            </button>
           </div>
-          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white">
-            <LogOut size={16} />
-            Log out
-          </button>
         </div>
       </aside>
 
+      {/* Main */}
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>

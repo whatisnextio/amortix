@@ -1,9 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+  html { @apply bg-surface-base; }
+  body { @apply bg-surface-base text-ink-primary antialiased font-sans; }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply rounded-full bg-white/10; }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl bg-surface-card shadow-card;
   }
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+  .pill-success { @apply pill bg-success-subtle text-success; }
+  .pill-danger  { @apply pill bg-danger-subtle text-danger; }
+  .pill-warn    { @apply pill bg-warn-subtle text-warn; }
+  .pill-accent  { @apply pill bg-accent-subtle text-accent; }
+  .pill-muted   { @apply pill bg-white/5 text-ink-secondary; }
+  .stat-number  { @apply text-3xl font-extrabold tracking-tight text-ink-primary; }
+  .stat-label   { @apply text-xs font-medium uppercase tracking-wider text-ink-muted; }
 }
