@@ -1,6 +1,5 @@
 import { Outlet, NavLink } from 'react-router-dom'
 import { LayoutDashboard, FileText, Users, LogOut } from 'lucide-react'
-import { AmortixMark } from './AmortixLogo'
 
 const nav = [
   { to: '/dashboard', label: 'Dashboard',  icon: LayoutDashboard },
@@ -15,12 +14,12 @@ export default function Layout() {
       <aside className="flex w-60 flex-col border-r border-white/5 bg-surface-base">
 
         {/* Wordmark */}
-        <div className="flex items-center gap-3 px-5 py-6">
-          <AmortixMark size={30} />
-          <span className="text-lg font-extrabold tracking-tight">
-            <span className="text-ink-primary">AMORTI</span>
-            <span style={{ background: 'linear-gradient(135deg,#00d4aa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>X</span>
-          </span>
+        <div className="flex items-center px-4 py-5">
+          <img
+            src={`${import.meta.env.BASE_URL}logo.png`}
+            alt="Amortix"
+            className="h-10 w-auto object-contain"
+          />
         </div>
 
         {/* Nav */}
