@@ -1,0 +1,25 @@
+import type { Contact } from '../types'
+
+export const contacts: Contact[] = [
+  { id: 1, name: 'Loan Recipient 01', contractCount: 1 },
+  { id: 2, name: 'Loan Recipient 02', contractCount: 1 },
+  { id: 3, name: 'Loan Recipient 03', contractCount: 1 },
+  { id: 4, name: 'Loan Recipient 04', contractCount: 1 },
+  { id: 5, name: 'Loan Recipient 05', contractCount: 1 },
+  { id: 6, name: 'Loan Recipient 06', contractCount: 1 },
+  { id: 7, name: 'Loan Recipient 07', contractCount: 1 },
+  { id: 8, name: 'Loan Recipient 08', contractCount: 1 },
+  { id: 9, name: 'Loan Recipient 09', contractCount: 1 },
+  { id: 10, name: 'Loan Recipient 10', contractCount: 1 },
+  { id: 11, name: 'Loan Recipient 11', contractCount: 1 },
+  { id: 12, name: 'Loan Recipient 12', contractCount: 1 },
+  { id: 13, name: 'Loan Recipient 13', contractCount: 1 },
+  { id: 14, name: 'Loan Recipient 14', contractCount: 1 },
+  { id: 15, name: 'Loan Recipient 15', contractCount: 1 },
+  { id: 16, name: 'Loan Recipient 16', contractCount: 1 },
+  { id: 17, name: 'Loan Recipient 17', contractCount: 1 },
+  { id: 18, name: 'Loan Recipient 18', contractCount: 1 },
+  { id: 19, name: 'Loan Recipient 19', contractCount: 1 },
+  { id: 20, name: 'Loan Recipient 20', contractCount: 1 },
+  { id: 21, name: 'Loan Recipient 21', contractCount: 1 },
+]
