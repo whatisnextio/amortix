@@ -1,10 +1,11 @@
 import { Outlet, NavLink } from 'react-router-dom'
-import { LayoutDashboard, FileText, Users, LogOut } from 'lucide-react'
+import { LayoutDashboard, FileText, Users, Settings, LogOut } from 'lucide-react'
 
 const nav = [
-  { to: '/dashboard', label: 'Dashboard',  icon: LayoutDashboard },
-  { to: '/contracts', label: 'Contracts',   icon: FileText        },
-  { to: '/contacts',  label: 'Contacts',    icon: Users           },
+  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/contracts', label: 'Contracts',  icon: FileText        },
+  { to: '/contacts',  label: 'Contacts',   icon: Users           },
+  { to: '/settings',  label: 'Settings',   icon: Settings        },
 ]
 
 export default function Layout() {

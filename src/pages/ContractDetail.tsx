@@ -21,7 +21,7 @@ const tabs: { id: Tab; label: string }[] = [
 const statusMeta = {
   paid:     { label: 'Paid',     icon: CheckCircle2, cls: 'text-success', row: '' },
   partial:  { label: 'Partial',  icon: AlertCircle,  cls: 'text-warn',    row: 'bg-warn-subtle/30' },
-  missed:   { label: 'Missed',   icon: XCircle,      cls: 'text-danger',  row: 'bg-danger-subtle/40' },
+  missed:   { label: 'Missed',   icon: XCircle,      cls: 'text-danger',  row: '' },
   current:  { label: 'Due',      icon: Clock,        cls: 'text-accent',  row: 'bg-accent-subtle/40' },
   upcoming: { label: 'Upcoming', icon: MinusCircle,  cls: 'text-ink-muted', row: '' },
 }
@@ -236,7 +236,7 @@ export default function ContractDetail() {
                   const Icon     = meta.icon
                   const variance = row.actualPayment !== null ? row.actualPayment - row.paymentDue : null
                   return (
-                    <tr key={row.period} className={`${meta.row} transition-colors hover:bg-white/[0.025]`}>
+                    <tr key={row.period} className={`${meta.row} ${row.status === 'missed' ? 'border-l-2 border-danger' : 'border-l-2 border-transparent'} transition-colors hover:bg-white/[0.025]`}>
                       <td className="px-4 py-2.5 text-xs text-ink-muted">{row.period}</td>
                       <td className="px-4 py-2.5 text-ink-secondary">{formatDate(row.dueDate)}</td>
                       <td className="px-4 py-2.5 text-right text-ink-secondary">{formatGBP(row.paymentDue)}</td>

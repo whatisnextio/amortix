@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Search, MapPin, Phone, Mail, FileText } from 'lucide-react'
 import { contacts } from '../data/contacts'
 
@@ -31,7 +32,7 @@ export default function ContactList() {
 
       <div className="grid grid-cols-3 gap-4">
         {filtered.map(c => (
-          <div key={c.id} className="card p-5 transition-all hover:border-white/10 hover:shadow-glow/5">
+          <Link key={c.id} to={`/contacts/${c.id}`} className="card p-5 transition-all hover:border-white/10 hover:shadow-glow/5 block no-underline">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-subtle text-sm font-extrabold text-accent">
                 {c.name.charAt(0)}
@@ -68,7 +69,7 @@ export default function ContactList() {
                 </div>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
