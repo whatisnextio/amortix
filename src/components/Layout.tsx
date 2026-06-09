@@ -1,5 +1,6 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, FileText, Users, Settings, LogOut } from 'lucide-react'
+import { getSession, logout } from '../lib/auth'
 
 const nav = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -9,6 +10,15 @@ const nav = [
 ]
 
 export default function Layout() {
+  const navigate  = useNavigate()
+  const session   = getSession()
+  const initials  = session?.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() ?? 'AM'
+
+  function handleLogout() {
+    logout()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <div className="flex h-screen overflow-hidden bg-surface-base">
       {/* Sidebar */}
@@ -47,13 +57,17 @@ export default function Layout() {
         <div className="border-t border-white/5 p-4">
           <div className="flex items-center gap-3 rounded-xl px-3 py-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/20 text-xs font-bold text-accent">
-              LM
+              {initials}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-ink-primary">Loan Maker</p>
-              <p className="text-xs text-ink-muted">Administrator</p>
+              <p className="truncate text-sm font-semibold text-ink-primary">{session?.name ?? 'User'}</p>
+              <p className="text-xs text-ink-muted">{session?.role ?? 'Administrator'}</p>
             </div>
-            <button className="text-ink-muted hover:text-ink-secondary transition-colors">
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              className="text-ink-muted hover:text-ink-secondary transition-colors"
+            >
               <LogOut size={14} />
             </button>
           </div>

@@ -13,6 +13,13 @@
   ::-webkit-scrollbar-thumb { @apply rounded-full bg-white/10; }
 }
 
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .print\:hidden { display: none !important; }
+  aside { display: none !important; }
+  .statement-doc { max-width: 100% !important; padding: 0 !important; }
+}
+
 @layer components {
   .card {
     @apply rounded-2xl bg-surface-card shadow-card;

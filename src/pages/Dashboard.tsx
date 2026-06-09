@@ -3,7 +3,7 @@ import { ArrowRight, TrendingUp, AlertTriangle, Banknote, FileText, Clock } from
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { contracts } from '../data/contracts'
+import { useData } from '../context/DataContext'
 import { formatGBP, formatDate } from '../lib/format'
 
 const portfolioTrend = [
@@ -16,6 +16,7 @@ const portfolioTrend = [
 ]
 
 export default function Dashboard() {
+  const { contracts } = useData()
   const totalPortfolio   = contracts.reduce((s, c) => s + c.amountFinanced, 0)
   const arrearsContracts = contracts.filter(c => c.arrears > 0)
   const totalArrears     = arrearsContracts.reduce((s, c) => s + c.arrears, 0)

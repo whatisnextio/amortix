@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, MapPin, Phone, Mail, FileText } from 'lucide-react'
-import { contacts } from '../data/contacts'
+import { useData } from '../context/DataContext'
 
 export default function ContactList() {
+  const { contacts } = useData()
   const [query, setQuery] = useState('')
 
   const filtered = contacts.filter(c =>

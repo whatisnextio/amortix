@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, MapPin, Phone, Mail, Pencil } from 'lucide-react'
-import { contacts } from '../data/contacts'
-import { contracts } from '../data/contracts'
+import { useData } from '../context/DataContext'
 import { formatGBP, formatDate } from '../lib/format'
 
 export default function ContactDetail() {
+  const { contacts, contracts } = useData()
   const { id } = useParams()
   const contact = contacts.find(c => c.id === Number(id))
   const [note, setNote] = useState('')

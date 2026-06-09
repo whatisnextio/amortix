@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, ArrowUpDown, ArrowRight } from 'lucide-react'
-import { contracts } from '../data/contracts'
+import { Search, ArrowUpDown, ArrowRight, Plus } from 'lucide-react'
+import { useData } from '../context/DataContext'
 import { formatGBP, formatDate } from '../lib/format'
 
 type SortKey = 'borrower' | 'amountFinanced' | 'arrears' | 'endDate'
 
 export default function ContractList() {
+  const { contracts } = useData()
   const [query, setQuery] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('arrears')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
@@ -47,6 +48,13 @@ export default function ContractList() {
           <h1 className="text-2xl font-extrabold tracking-tight text-ink-primary">Contracts</h1>
           <p className="mt-0.5 text-sm text-ink-muted">{contracts.length} active loans</p>
         </div>
+        <div className="flex items-center gap-3">
+        <Link
+          to="/contracts/new"
+          className="flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-surface-base hover:bg-accent/90 transition-colors"
+        >
+          <Plus size={14} /> New loan
+        </Link>
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted" />
           <input
@@ -56,6 +64,7 @@ export default function ContractList() {
             onChange={e => setQuery(e.target.value)}
             className="w-64 rounded-xl border border-white/8 bg-surface-card py-2 pl-9 pr-4 text-sm text-ink-primary placeholder-ink-muted outline-none focus:border-accent/40 focus:ring-2 focus:ring-accent/10"
           />
+        </div>
         </div>
       </div>
 
