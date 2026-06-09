@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { CheckCircle2 } from 'lucide-react'
 
-const initialNominals = [
+const NOMINALS_KEY = 'amortix_nominals'
+
+const DEFAULT_NOMINALS = [
   { nominal: '3',   label: 'Earnings',        xero: '200' },
   { nominal: '503', label: 'Deferred Income', xero: '485' },
   { nominal: '601', label: 'Debtors',         xero: '610' },
@@ -8,13 +11,34 @@ const initialNominals = [
   { nominal: '621', label: 'Cash Receipts',   xero: '100' },
 ]
 
+function loadNominals() {
+  try {
+    const raw = localStorage.getItem(NOMINALS_KEY)
+    return raw ? JSON.parse(raw) : DEFAULT_NOMINALS
+  } catch {
+    return DEFAULT_NOMINALS
+  }
+}
+
 export default function NominalsSettings() {
-  const [nominals, setNominals] = useState(initialNominals)
+  const [nominals, setNominals] = useState(loadNominals)
+  const [saved,    setSaved]    = useState(false)
 
   function handleChange(nominal: string, value: string) {
-    setNominals(prev =>
+    setNominals((prev: typeof DEFAULT_NOMINALS) =>
       prev.map(n => (n.nominal === nominal ? { ...n, xero: value } : n))
     )
+  }
+
+  function handleSave() {
+    localStorage.setItem(NOMINALS_KEY, JSON.stringify(nominals))
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2500)
+  }
+
+  function handleCancel() {
+    setNominals(loadNominals())
+    setSaved(false)
   }
 
   return (
@@ -41,7 +65,7 @@ export default function NominalsSettings() {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/[0.04]">
-            {nominals.map(n => (
+            {nominals.map((n: typeof DEFAULT_NOMINALS[0]) => (
               <tr key={n.nominal} className="hover:bg-white/[0.025] transition-colors">
                 <td className="px-4 py-3 font-mono text-xs text-ink-muted">{n.nominal}</td>
                 <td className="px-4 py-3 text-ink-secondary">{n.label}</td>
@@ -63,16 +87,23 @@ export default function NominalsSettings() {
       <div className="flex items-center gap-3">
         <button
           type="button"
-          className="rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-surface-base hover:bg-accent-dim transition-colors"
+          onClick={handleSave}
+          className="rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-surface-base hover:bg-accent/90 transition-colors"
         >
           Save changes
         </button>
         <button
           type="button"
+          onClick={handleCancel}
           className="rounded-xl border border-white/8 px-5 py-2.5 text-sm font-semibold text-ink-secondary hover:bg-white/5 transition-colors"
         >
           Cancel
         </button>
+        {saved && (
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-success">
+            <CheckCircle2 size={13} /> Saved
+          </span>
+        )}
       </div>
     </div>
   )

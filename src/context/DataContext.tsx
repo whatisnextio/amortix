@@ -1,10 +1,21 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import type { Contract, Contact, Transaction } from '../types'
+import type { Contract, Contact, Transaction, ChaseNote } from '../types'
 import { contracts as seedContracts } from '../data/contracts'
 import { contacts as seedContacts } from '../data/contacts'
 
 const CONTRACTS_KEY = 'amortix_contracts'
 const CONTACTS_KEY  = 'amortix_contacts'
+const VERSION_KEY   = 'amortix_seed_version'
+const SEED_VERSION  = '3'
+
+function initData() {
+  const stored = localStorage.getItem(VERSION_KEY)
+  if (stored !== SEED_VERSION) {
+    localStorage.setItem(CONTRACTS_KEY, JSON.stringify(seedContracts))
+    localStorage.setItem(CONTACTS_KEY, JSON.stringify(seedContacts))
+    localStorage.setItem(VERSION_KEY, SEED_VERSION)
+  }
+}
 
 function load<T>(key: string, seed: T): T {
   try {
@@ -24,12 +35,16 @@ interface DataContextValue {
   contacts: Contact[]
   addContract: (c: Omit<Contract, 'id' | 'code' | 'trialBalance' | 'recentTransactions'>) => Contract
   addPayment: (contractId: number, tx: Omit<Transaction, 'id'>) => void
+  addChaseNote: (contractId: number, note: Omit<ChaseNote, 'id'>) => void
   resetData: () => void
 }
 
 const DataContext = createContext<DataContextValue | null>(null)
 
 export function DataProvider({ children }: { children: ReactNode }) {
+  // Run version guard synchronously before first render reads localStorage
+  initData()
+
   const [contracts, setContracts] = useState<Contract[]>(() => load(CONTRACTS_KEY, seedContracts))
   const [contacts, setContacts]   = useState<Contact[]>(() => load(CONTACTS_KEY, seedContacts))
 
@@ -59,7 +74,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
       save(CONTRACTS_KEY, next)
       return next
     })
-    // Return the new contract — we need to read it back
     const raw = localStorage.getItem(CONTRACTS_KEY)
     const all: Contract[] = raw ? JSON.parse(raw) : []
     return all[all.length - 1]
@@ -87,15 +101,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const addChaseNote = useCallback((contractId: number, note: Omit<ChaseNote, 'id'>) => {
+    setContracts(prev => {
+      const next = prev.map(c => {
+        if (c.id !== contractId) return c
+        const existing = c.chaseNotes ?? []
+        const id = existing.length ? Math.max(...existing.map(n => n.id)) + 1 : 1
+        return { ...c, chaseNotes: [...existing, { ...note, id }] }
+      })
+      save(CONTRACTS_KEY, next)
+      return next
+    })
+  }, [])
+
   const resetData = useCallback(() => {
     save(CONTRACTS_KEY, seedContracts)
     save(CONTACTS_KEY, seedContacts)
+    localStorage.setItem(VERSION_KEY, SEED_VERSION)
     setContracts(seedContracts)
     setContacts(seedContacts)
   }, [])
 
   return (
-    <DataContext.Provider value={{ contracts, contacts, addContract, addPayment, resetData }}>
+    <DataContext.Provider value={{ contracts, contacts, addContract, addPayment, addChaseNote, resetData }}>
       {children}
     </DataContext.Provider>
   )

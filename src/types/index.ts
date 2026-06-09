@@ -1,3 +1,11 @@
+export interface ChaseNote {
+  id: number
+  date: string
+  action: 'Phone call' | 'Email sent' | 'Letter sent' | 'Meeting' | 'Escalated'
+  notes: string
+  addedBy: string
+}
+
 export interface Contract {
   id: number
   code: string
@@ -23,6 +31,7 @@ export interface Contract {
   interestRate: number
   trialBalance: TrialBalance
   recentTransactions: Transaction[]
+  chaseNotes?: ChaseNote[]
 }
 
 export interface TrialBalance {
