@@ -60,6 +60,7 @@ export default function ContractList() {
           <input
             type="text"
             placeholder="Search borrower or code..."
+            aria-label="Search contracts"
             value={query}
             onChange={e => setQuery(e.target.value)}
             className="w-64 rounded-xl border border-white/8 bg-surface-card py-2 pl-9 pr-4 text-sm text-ink-primary placeholder-ink-muted outline-none focus:border-accent/40 focus:ring-2 focus:ring-accent/10"
@@ -117,6 +118,16 @@ export default function ContractList() {
             })}
           </tbody>
         </table>
+        {filtered.length === 0 && (
+          <div className="px-6 py-16 text-center">
+            <p className="text-sm font-semibold text-ink-secondary mb-1">
+              {query ? 'No contracts match your search' : 'No contracts yet'}
+            </p>
+            <p className="text-xs text-ink-muted">
+              {query ? 'Try a different borrower name or reference code.' : 'Create your first loan to get started.'}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

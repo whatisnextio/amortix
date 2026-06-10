@@ -24,6 +24,7 @@ export default function ContactList() {
           <input
             type="text"
             placeholder="Search contacts..."
+            aria-label="Search contacts"
             value={query}
             onChange={e => setQuery(e.target.value)}
             className="w-64 rounded-xl border border-white/8 bg-surface-card py-2 pl-9 pr-4 text-sm text-ink-primary placeholder-ink-muted outline-none focus:border-accent/40 focus:ring-2 focus:ring-accent/10"
@@ -31,6 +32,16 @@ export default function ContactList() {
         </div>
       </div>
 
+      {filtered.length === 0 && (
+        <div className="card px-6 py-16 text-center">
+          <p className="text-sm font-semibold text-ink-secondary mb-1">
+            {query ? 'No contacts match your search' : 'No contacts on record'}
+          </p>
+          <p className="text-xs text-ink-muted">
+            {query ? 'Try a different name or email address.' : 'Contacts are created automatically when you add a loan.'}
+          </p>
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-4">
         {filtered.map(c => (
           <Link key={c.id} to={`/contacts/${c.id}`} className="card p-5 transition-all hover:border-white/10 hover:shadow-glow/5 block no-underline">
