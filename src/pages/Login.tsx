@@ -86,7 +86,7 @@ export default function Login() {
           <div className="rounded-xl border border-white/5 bg-surface-raised px-4 py-3 space-y-1">
             <p className="text-xs font-semibold text-ink-muted">Demo credentials</p>
             <p className="font-mono text-xs text-ink-secondary">demo@amortix.io / demo2026</p>
-            <p className="font-mono text-xs text-ink-secondary">ben@fmf.co.uk / fmf2026</p>
+            <p className="font-mono text-xs text-ink-secondary">user@amortix.io / user2026</p>
           </div>
         </div>
       </div>

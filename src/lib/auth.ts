@@ -11,9 +11,9 @@ const DEMO_USERS: Record<string, { password: string; user: AuthUser }> = {
     password: 'demo2026',
     user: { email: 'demo@amortix.io', name: 'Demo User', role: 'Administrator' },
   },
-  'ben@fmf.co.uk': {
-    password: 'fmf2026',
-    user: { email: 'ben@fmf.co.uk', name: 'Ben', role: 'Director' },
+  'user@amortix.io': {
+    password: 'user2026',
+    user: { email: 'user@amortix.io', name: 'User', role: 'Director' },
   },
 }
 
