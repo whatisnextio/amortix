@@ -14,8 +14,8 @@ export default function Layout() {
   const session   = getSession()
   const initials  = session?.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() ?? 'AM'
 
-  function handleLogout() {
-    logout()
+  async function handleLogout() {
+    await logout()
     navigate('/login', { replace: true })
   }
 
